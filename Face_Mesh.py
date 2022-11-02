@@ -7,17 +7,20 @@ import cv2
 import mediapipe as mp
 from utils_holistic import *
 
-print(" Fin du chargement de l'import", '\n', "Durée :", time()-t0, "seconde(s)")
 
 mp_drawing = mp.solutions.drawing_utils
 mp_drawing_styles = mp.solutions.drawing_styles
 mp_face_mesh = mp.solutions.face_mesh
 face_mesh_lips_positions , face_oval_landmarks_positions = get_face_mesh_landmarks_positions()
 
+print(" Fin du chargement de l'import", '\n', "Durée :", time()-t0, "seconde(s)")
+
+
 
 # For webcam input:
 drawing_spec = mp_drawing.DrawingSpec(thickness=1, circle_radius=1)
 cap = cv2.VideoCapture(0)
+
 
 #Number of detections
 n_detection = 0
@@ -26,8 +29,8 @@ n_total_frames = 0
 with mp_face_mesh.FaceMesh(
     max_num_faces=2,
     refine_landmarks=True,
-    min_detection_confidence=0.7,
-    min_tracking_confidence=0.7) as face_mesh: #initial confidences = 0.5
+    min_detection_confidence=0.5,
+    min_tracking_confidence=0.5) as face_mesh: #initial confidences = 0.5
   
   while cap.isOpened():
     n_total_frames += 1 
@@ -44,7 +47,8 @@ with mp_face_mesh.FaceMesh(
     image.flags.writeable = False
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     brightness(image)
-    #image = adjust_gamma(image,10)
+    #image = adjust_gamma(image,2)
+    #image = histogram_equalization(image)
     brightness(image)
     results = face_mesh.process(image)
     

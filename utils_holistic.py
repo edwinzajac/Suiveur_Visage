@@ -236,3 +236,4 @@ def detect_N_show(image,face_landmarks,eyes_landmarks_position,lips_landmarks_po
     cv2.line(image, Le, Re, color=(0, 0, 255), thickness=2)
     cv2.line(image, Lips_barycenter, Head_barycenter, color=(255, 0, 0), thickness=2)
     
+    
